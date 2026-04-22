@@ -14,7 +14,7 @@ data "aws_ami" "app_ami" {
   owners = ["979382823631"] # Bitnami
 }
 
-data "aws_vps" default {
+data "aws_vps" "default" {
   default = true
 }
 
@@ -25,7 +25,7 @@ resource "aws_instance" "blog" {
   vps_security_group_ids = [aws_security_group.blog.id]
 
   tags = {
-    Name = "HelloWorld"
+    Name = "Learning Terraform"
   }
 }
 
