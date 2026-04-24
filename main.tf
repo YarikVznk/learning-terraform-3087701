@@ -1,17 +1,5 @@
-data "aws_ami" "app_ami" {
-  most_recent = true
-
-  filter {
-    name   = "name"
-    values = ["bitnami-tomcat-*-x86_64-hvm-ebs-nami"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  owners = ["979382823631"] # Bitnami
+data "aws_ssm_parameter" "amazon_linux_2023" {
+  name = "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64"
 }
 
 module "blog_vpc" {
@@ -83,18 +71,18 @@ resource "aws_lb_target_group" "blog" {
 
 
 module "blog_autoscaling" {
-source  = "terraform-aws-modules/autoscaling/aws"
-version = "9.2.0"
-name = "blog"
+source   = "terraform-aws-modules/autoscaling/aws"
+version  = "9.2.0"
+name     = "blog"
 min_size = 1
 max_size = 2
 
 vpc_zone_identifier = module.blog_vpc.public_subnets
 
 launch_template_name = "blog"
-security_groups = [module.blog_sg.security_group_id]
-instance_type = var.instance_type
-image_id          = data.aws_ami.app_ami.id
+security_groups      = [module.blog_sg.security_group_id]
+instance_type        = var.instance_type
+image_id             = data.aws_ssm_parameter.amazon_linux_2023.value
 
 traffic_source_attachments = {
   blog_alb = {
