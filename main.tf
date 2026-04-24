@@ -66,9 +66,7 @@ module "blog_alb" {
   vpc_id  = module.blog_vpc.vpc_id
   subnets = module.blog_vpc.public_subnets
 
-  security_groups = [module.blog_vpc.security_group_id]
-
- 
+  security_groups = [module.blog_sg.security_group_id]
 
   listeners = {
     blog-http = {
@@ -81,8 +79,6 @@ module "blog_alb" {
     }
     
   }
-
- 
 
   tags = {
     Environment = "Dev"
