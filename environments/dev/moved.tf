@@ -15,7 +15,7 @@ moved {
 
 moved {
     from = aws_lb_target_group.blog
-    to   = module.dev.aws_lb_target_group
+    to   = module.dev.aws_lb_target_group.blog
 }
 
 moved {
