@@ -4,8 +4,8 @@ variable "instance_type" {
 }
 
 variable "ami_filter" {
-  description "Name filter and owner for AMI"
-  type = object ({
+  description = "Name filter and owner for AMI"
+  type        = object ({
     name  = string
     owner = string  
   })
@@ -15,7 +15,7 @@ variable "ami_filter" {
   }
 }
 
-variable "environment"{
+variable "environment" {
   description = "Deployment environment"
   type        = object ({
     name           = string
@@ -24,6 +24,7 @@ variable "environment"{
   default = {
     name           = "dev"
     network_prefix = "10.0"
+  }x
 }
 
 variable "min_size"{
